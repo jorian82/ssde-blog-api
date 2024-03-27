@@ -1,9 +1,15 @@
 package com.ssde.rest.blogapi.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +27,7 @@ import java.util.UUID;
 @Data
 @Builder
 @Entity
+@Table(name = "post")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Post {
@@ -32,11 +39,14 @@ public class Post {
     private UUID id;
     @Version
     private Integer version;
-//    private User user;
     private String content;
     private Integer likes;
     private Integer upvotes;
     private Integer dnvotes;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
